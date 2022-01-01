@@ -554,6 +554,7 @@ int CFITS_API fits_read_wcstab(fitsfile *fptr, int nwtb, wtbarr *wtb, int *statu
 
 /* error status codes */
 
+#define OPEN_FD			 -107 /* open using file descriptor */
 #define CREATE_DISK_FILE -106 /* create disk file, without extended filename syntax */
 #define OPEN_DISK_FILE   -105 /* open disk file, without extended filename syntax */
 #define SKIP_TABLE       -104 /* move to 1st image when opening file */

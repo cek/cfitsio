@@ -1131,7 +1131,9 @@ int fits_register_driver( char *prefix,
 	int (*flush)(int driverhandle),
 	int (*seek)(int driverhandle, LONGLONG offset),
 	int (*fitsread) (int driverhandle, void *buffer, long nbytes),
-	int (*fitswrite)(int driverhandle, void *buffer, long nbytes));
+	int (*fitswrite)(int driverhandle, void *buffer, long nbytes),
+	int (*fitsopen_fd)(int fd, int rwmode, int *driverhandle),
+	int (*fitscreate_fd)(int fd, int *driverhandle));
 
 /* file driver I/O routines */
 
@@ -1153,6 +1155,8 @@ int file_flush(int driverhandle);
 int file_seek(int driverhandle, LONGLONG offset);
 int file_read (int driverhandle, void *buffer, long nbytes);
 int file_write(int driverhandle, void *buffer, long nbytes);
+int file_open_fd(int fd, int rwmode, int *driverhandle);
+int file_create_fd(int fd, int *driverhandle);
 int file_is_compressed(char *filename);
 
 /* stream driver I/O routines */
