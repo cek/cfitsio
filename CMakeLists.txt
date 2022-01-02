@@ -63,6 +63,13 @@ ENDIF()
 
 #==============================================================================
 
+IF(MSVC)
+    ADD_COMPILE_OPTIONS($<$<CONFIG:>:/MT>
+                        $<$<CONFIG:Debug>:/MTd>
+                        $<$<CONFIG:Release>:/MT>
+                        $<$<CONFIG:RelWithDebInfo>:/MT>)
+ENDIF()
+
 FIND_PACKAGE(ZLIB REQUIRED)
 
 IF(BUILD_SHARED_LIBS)
