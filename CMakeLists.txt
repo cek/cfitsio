@@ -42,7 +42,8 @@ INCLUDE(CheckCSourceCompiles)
 #==============================================================================
 
 # Allow the developer to select if Dynamic or Static libraries are built
-OPTION(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
+OPTION(BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
+OPTION (USE_DLL_RUNTIME "Use MD/MDd runtime options" ON)
 
 # Allow curl dependency to be disabled with "-DUSE_CURL=OFF":
 OPTION(USE_CURL "USE_CURL" ON)
@@ -64,10 +65,17 @@ ENDIF()
 #==============================================================================
 
 IF(MSVC)
-    ADD_COMPILE_OPTIONS($<$<CONFIG:>:/MT>
-                        $<$<CONFIG:Debug>:/MTd>
-                        $<$<CONFIG:Release>:/MT>
-                        $<$<CONFIG:RelWithDebInfo>:/MT>)
+    IF(USE_DLL_RUNTIME)
+        ADD_COMPILE_OPTIONS($<$<CONFIG:>:/MD>
+                            $<$<CONFIG:Debug>:/MDd>
+                            $<$<CONFIG:Release>:/MD>
+                            $<$<CONFIG:RelWithDebInfo>:/MD>)
+    ELSE()
+        ADD_COMPILE_OPTIONS($<$<CONFIG:>:/MT>
+                            $<$<CONFIG:Debug>:/MTd>
+                            $<$<CONFIG:Release>:/MT>
+                            $<$<CONFIG:RelWithDebInfo>:/MT>)
+    ENDIF()
 ENDIF()
 
 FIND_PACKAGE(ZLIB REQUIRED)
